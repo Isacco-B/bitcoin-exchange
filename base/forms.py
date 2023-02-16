@@ -1,12 +1,16 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UsernameField
-from base.models import Certificate, User
+from base.models import Order, User
 
-class CertificateForm(forms.ModelForm):
+class OrderForm(forms.ModelForm):
 
     class Meta:
-        model = Certificate
-        fields = '__all__'
+        model = Order
+        fields = (
+            "order_type",
+            'order_price',
+            'date_of_creation',
+            )
 
 
 class UserForm(UserCreationForm):

@@ -15,19 +15,19 @@ Including another URLconf
 """
 from django.urls import path
 from .views import (
-    CertificateListView,
-    CertificateCreateView,
-    CertificateDetailView,
-    CertificateUpdateView,
-    CertificateDeleteView,
+    OrderListView,
+    OrderCreateView,
+    OrderDetailView,
+    OrderUpdateView,
+    OrderDeleteView,
 )
 
-app_name = 'transactions'
+app_name = 'orders'
 
 urlpatterns = [
-    path('', CertificateListView.as_view(), name='certificate-list'),
-    path('create/', CertificateCreateView.as_view(), name='certificate-create'),
-    path('<int:pk>/', CertificateDetailView.as_view(), name='certificate-detail'),
-    # path('update/<int:pk>/', CertificateUpdateView.as_view(), name='certificate-update'),
-    path('delete/<int:pk>/', CertificateDeleteView.as_view(), name='certificate-delete'),
+    path('', OrderListView.as_view(), name='order-list'),
+    path('create/', OrderCreateView.as_view(), name='order-create'),
+    path('<int:pk>/', OrderDetailView.as_view(), name='order-detail'),
+    path('update/<int:pk>/', OrderUpdateView.as_view(), name='order-update'),
+    path('delete/<int:pk>/', OrderDeleteView.as_view(), name='order-delete'),
 ]

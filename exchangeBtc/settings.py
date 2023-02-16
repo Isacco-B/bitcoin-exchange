@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'crispy_tailwind',
 
     'base',
-    'transactions',
+    'order',
     'profile',
 ]
 

@@ -3,9 +3,9 @@
 {% load crispy_forms_tags %}
 {% load tailwind_filters %}
 {% block content %}
-    <a href="{% url 'certificates:certificate-list' %}">Go back to certificates</a>
+    <a href="{% url 'orders:order-list' %}">Go back to orders</a>
     <hr />
-    <h1>Are you sure you want to delete this certificate?</h1>
+    <h1>Are you sure you want to delete this order?</h1>
     <form method="post">
         {% csrf_token %}
         {{ form|crispy }}

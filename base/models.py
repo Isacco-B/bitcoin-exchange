@@ -3,7 +3,7 @@ from django.utils import timezone
 from djongo.models.fields import ObjectIdField, Field
 from django.db.models.signals import post_save
 from django.contrib.auth.models import AbstractUser
-from random_btc_amount import random_btc_amount
+from base.random_btc_amount import random_btc_amount
 
 
 class User(AbstractUser):
@@ -57,7 +57,7 @@ class Order(models.Model):
         verbose_name_plural = ("Orders")
 
     def __str__(self):
-        return self.student.username + " " + self.course
+        return self.user.username + " " + self.date_of_creation
 
 
 # class Transaction(models.Model):

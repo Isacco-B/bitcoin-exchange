@@ -33,8 +33,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('', LandingPageView.as_view(), name='landing-page'),
-    path('students/', include('profile.urls', namespace='students')),
-    path('transactions/', include('transactions.urls', namespace='certificates')),
+    path('profile/', include('profile.urls', namespace='profile')),
+    path('orders/', include('order.urls', namespace='orders')),
     path('search/', SearchResultsView.as_view(), name='search_results' ),
 
     path('login/', LoginView.as_view(), name='login'),
