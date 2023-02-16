@@ -15,15 +15,15 @@ class User(AbstractUser):
 
     _id = ObjectIdField()
     ips = models.Field(default=[])
-    wallet_btc = models.FloatField(default=0, null=True, blank=True)
+    wallet_btc = models.FloatField(null=True, blank=True)
     age = models.IntegerField(default=0)
     gender = models.CharField(choices=GENDER_CHOICES, max_length=50)
     address = models.CharField(max_length=50)
     phone_number = models.CharField(max_length=12)
 
     class Meta:
-        verbose_name = ("Student")
-        verbose_name_plural = ("Students")
+        verbose_name = ("User")
+        verbose_name_plural = ("Users")
 
     def save_user(self):
         self.wallet_btc = random_btc_amount()
