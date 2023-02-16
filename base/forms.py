@@ -9,7 +9,7 @@ class CertificateForm(forms.ModelForm):
         fields = '__all__'
 
 
-class StudentForm(UserCreationForm):
+class UserForm(UserCreationForm):
 
     class Meta:
         model = User
@@ -25,7 +25,7 @@ class StudentForm(UserCreationForm):
             )
         field_classes = {"username": UsernameField}
 
-class StudentUpdateForm(forms.ModelForm):
+class UserUpdateForm(forms.ModelForm):
 
     class Meta:
         model = User

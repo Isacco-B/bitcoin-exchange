@@ -15,20 +15,18 @@ Including another URLconf
 """
 from django.urls import path
 from .views import (
-    StudentListView,
-    StudentCreateView,
-    StudentDetailView,
-    StudentUpdateView,
-    StudentDeleteView,
+    UserListView,
+    UserDetailView,
+    UserUpdateView,
+    UserDeleteView,
     )
 
 app_name = 'profile'
 
 urlpatterns = [
-    path('', StudentListView.as_view(), name='student-list'),
-    path('create/', StudentCreateView.as_view(), name='student-create'),
-    path('<int:pk>/', StudentDetailView.as_view(), name='student-detail'),
-    path('update/<int:pk>/', StudentUpdateView.as_view(), name='student-update'),
-    path('delete/<int:pk>/', StudentDeleteView.as_view(), name='student-delete'),
+    path('', UserListView.as_view(), name='profile-list'),
+    path('<int:pk>/', UserDetailView.as_view(), name='profile-detail'),
+    path('update/<int:pk>/', UserUpdateView.as_view(), name='profile-update'),
+    path('delete/<int:pk>/', UserDeleteView.as_view(), name='profile-delete'),
 
 ]

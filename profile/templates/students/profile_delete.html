@@ -3,9 +3,9 @@
 {% load crispy_forms_tags %}
 {% load tailwind_filters %}
 {% block content %}
-    <a href="{% url 'students:student-list' %}">Go back to students</a>
+    <a href="{% url 'profile:profile-list' %}">Go back to users</a>
     <hr />
-    <h1>Are you sure you want to delete this student?</h1>
+    <h1>Are you sure you want to delete this user?</h1>
     <form method="post">
         {% csrf_token %}
         {{ form|crispy }}
