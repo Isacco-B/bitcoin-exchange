@@ -5,14 +5,6 @@ from django.contrib import messages
 from .models import User
 
 
-# @receiver(post_save, sender=User)
-# def new_instance_created(sender, instance, created, **kwargs):
-#     if created:
-#        <send_email_to_admin>
-
-
-
-
 @receiver(user_logged_in)
 def login_success(sender, request, user, **kwargs):
     user_ip = request.META['REMOTE_ADDR']
