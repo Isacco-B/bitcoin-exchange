@@ -1,9 +1,10 @@
 from django.shortcuts import render, reverse
 from django.views import generic
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import UserForm
 from .models import Order
 
-class LandingPageView(generic.TemplateView):
+class LandingPageView(LoginRequiredMixin, generic.TemplateView):
     template_name = "landing.html"
 
 

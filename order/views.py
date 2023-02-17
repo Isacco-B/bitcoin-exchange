@@ -4,22 +4,22 @@ from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from base.models import Order
 from base.forms import OrderForm
-from .mixins import StaffAndLoginRequiredMixin
 
 
 class OrderListView(LoginRequiredMixin, generic.ListView):
-    template_name = 'orders/order_list.html'
+    template_name = 'order/order_list.html'
     context_object_name = 'orders'
 
     def get_queryset(self):
-        if self.request.user.is_staff:
-            return Order.objects.all()
-        elif self.request.user.is_authenticated:
-            return Order.objects.filter(user=self.request.user.pk)
+        return Order.objects.all()
+        # if self.request.user.is_staff:
+        #     return Order.objects.all()
+        # elif self.request.user.is_authenticated:
+        #     return Order.objects.filter(user=self.request.user.pk)
 
 
-class OrderCreateView(StaffAndLoginRequiredMixin, generic.CreateView):
-    template_name = 'orders/order_create.html'
+class OrderCreateView(LoginRequiredMixin, generic.CreateView):
+    template_name = 'order/order_create.html'
     form_class = OrderForm
 
     def get_success_url(self) -> str:
@@ -31,15 +31,15 @@ class OrderCreateView(StaffAndLoginRequiredMixin, generic.CreateView):
 
 
 class OrderDetailView(generic.DetailView):
-    template_name = 'orders/order_detail.html'
+    template_name = 'order/order_detail.html'
     context_object_name = 'orders'
 
     def get_queryset(self):
         return Order.objects.all()
 
 
-class OrderUpdateView(StaffAndLoginRequiredMixin, generic.UpdateView):
-    template_name = 'orders/order_update.html'
+class OrderUpdateView(LoginRequiredMixin, generic.UpdateView):
+    template_name = 'order/order_update.html'
     context_object_name = 'orders'
     form_class = OrderForm
 
@@ -55,8 +55,8 @@ class OrderUpdateView(StaffAndLoginRequiredMixin, generic.UpdateView):
         return super(OrderUpdateView, self).form_valid(form)
 
 
-class OrderDeleteView(StaffAndLoginRequiredMixin, generic.DeleteView):
-    template_name = 'orders/order_delete.html'
+class OrderDeleteView(LoginRequiredMixin, generic.DeleteView):
+    template_name = 'order/order_delete.html'
     context_object_name = 'orders'
 
     def get_queryset(self):

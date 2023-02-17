@@ -6,7 +6,12 @@
     <div class="container px-5 py-24 mx-auto flex flex-wrap">
         <div class="w-full mb-6 py-6 flex justify-between items-center border-b border-gray-200">
             <div>
-                <h1 class="text-4xl text-gray-800">Student</h1>
+                <h1 class="text-4xl text-gray-800">Orders</h1>
+            </div>
+            <div>
+                <a class="text-gray-500 hover:text-blue-500" href="{% url 'orders:order-create' %}">
+                    Create a new order
+                </a>
             </div>
         </div>
         <div class="flex flex-col w-full">
@@ -17,59 +22,51 @@
                     <thead class="bg-gray-50">
                         <tr>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Username
+                            User
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            First Name
+                            Type
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Last Name
+                            Status
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Age
+                            Date
                             </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Email
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Cell Phone Number
-                            </th>
+                            {% comment %} {% if request.user.is_authenticated %}
                             <th scope="col" class="relative px-6 py-3">
                             <span class="sr-only">Edit</span>
                             </th>
+                            {% endif %} {% endcomment %}
                         </tr>
                     </thead>
                     <tbody>
-                        {% for user in users %}
+                        {% for order in orders %}
                             <tr class="bg-white">
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                    <a class="text-blue-500 hover:text-blue-800" href="{% url 'profile:profile-detail' profile.pk %}">{{ user.username }}</a>
+                                    <a class="text-blue-500 hover:text-blue-800" href="{% url 'orders:order-detail' user.pk %}">{{ user }}</a>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ user.first_name }}
+                                    {{ order.order_type }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ user.last_name }}
+                                    {{ order.order_status }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ user.age }}
+                                    {{ order.date_of_creation|date:"D d M Y" }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ user.email }}
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ user.phone_number }}
-                                </td>
+                                {% comment %} {% if request.user.is_staff %}
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a href="{% url 'profile:profile-update' profile.pk %}" class="text-yellow-600 hover:text-yellow-900">
+                                    <a href="{% url 'certificates:certificate-update' certificate.pk %}" class="text-yellow-600 hover:text-yellow-900">
                                         Edit
                                     </a>
                                 </td>
+                                {% endif %} {% endcomment %}
                             </tr>
 
                         {% empty %}
 
-                        <p>There are currently no user</p>
+                        <p>There are currently no orders</p>
 
                         {% endfor %}
                     </tbody>
