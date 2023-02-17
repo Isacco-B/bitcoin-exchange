@@ -1,25 +1,29 @@
-# from django.contrib.auth.signals import user_logged_in
-# from django.dispatch import receiver
-# from django.contrib import messages
-# import redis
-
-# r = redis.Redis(
-#     host='localhost',
-#     port=6379,
-#     db=0
-# )
-
-# @receiver(user_logged_in)
-# def login_success(sender, request, user, **kwargs):
-#     user_ip = request.META['REMOTE_ADDR']
-#     user = request.user.username
-#     user_last_ip = r.get(user)
-#     if user_last_ip is None:
-#         r.set(user, user_ip)
-#     elif user_last_ip.decode() != user_ip:
-#         print(f"Ip: {user_ip} - Ip_Precedente {user_last_ip.decode()}")
-#         r.set(user, user_ip)
-#         messages.warning(request,f'your ip has changed: current_ip {user_ip} | last_ip {user_last_ip.decode()}')
+from django.contrib.auth.signals import user_logged_in
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.contrib import messages
+from .models import User
 
 
+# @receiver(post_save, sender=User)
+# def new_instance_created(sender, instance, created, **kwargs):
+#     if created:
+#        <send_email_to_admin>
+
+
+
+
+@receiver(user_logged_in)
+def login_success(sender, request, user, **kwargs):
+    user_ip = request.META['REMOTE_ADDR']
+    user = User.objects.get(username=user.username)
+    user_last_ip = user.ips
+    print(user_last_ip)
+    if not user_last_ip:
+        user_last_ip.append(user_ip)
+        User.objects.filter(username=user.username).update(ips=user_last_ip)
+    elif user_ip not in user_last_ip:
+        messages.warning(request,f'your ip has changed!')
+        user_last_ip.append(user_ip)
+        User.objects.filter(username=user.username).update(ips=user_last_ip)
 

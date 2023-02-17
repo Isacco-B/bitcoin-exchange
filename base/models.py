@@ -25,9 +25,9 @@ class User(AbstractUser):
         verbose_name = ("User")
         verbose_name_plural = ("Users")
 
-    def save_user(self):
-        self.wallet_btc = random_btc_amount()
-        self.save()
+    # def save(self, *arg, **kwargs):
+    #     self.wallet_btc = random_btc_amount()
+    #     super(User, self).save()
 
     def __str__(self):
         return self.username
