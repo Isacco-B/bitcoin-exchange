@@ -1,179 +1,206 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<div class="flex items-center justify-center p-4">
+<div class="flex items-center justify-center p-4 mt-5">
   <div class="flex flex-col max-w-7xl w-full md:w-[70%]">
-  <div class="flex flex-col lg:flex-row ">
-      <div class="bg-white shadow-lg rounded-xl flex items-start h-32 w-[90%] lg:w-1/2 justify-center py-4 px-8 mx-4 my-2">
-          <div class="flex items-center justify-start w-full">
-              <div class="flex-col w-[85%]">
-                  <div class="text-sm font-medium text-violet-600 my-2">BTC Amount</div>
-                  <div class="class flex items-center">
-                      <div class="text-3xl font-bold text-gray-700">{{user.wallet_btc}}</div>
-                  </div>
-              </div>
+    <div class="flex flex-col lg:flex-row ">
+      <div
+        class="bg-white shadow-md shadow-inner rounded-xl flex items-start h-32 w-[90%] lg:w-1/2 justify-center py-4 px-8 mx-4 my-2">
+        <div class="flex items-center justify-start w-full">
+          <div class="flex-col w-[85%]">
+            <div class="text-sm font-medium text-yellow-600 my-2">BTC Amount</div>
+            <div class="class flex items-center">
+              <div class="text-3xl font-bold text-gray-700">{{user.wallet_btc}}</div>
+            </div>
           </div>
+        </div>
       </div>
-      <div class="bg-white shadow-lg rounded-xl flex items-start h-32 w-[90%] lg:w-1/2 justify-center py-4 px-8 mx-4 my-2">
-          <div class="flex items-center justify-start w-full">
-              <div class="flex-col w-[85%]">
-                  <div class="text-sm font-medium text-violet-600 my-2">Engaged Users</div>
-                  <div class="class flex items-center">
-                      <div class="text-3xl font-bold text-gray-700">32.78%</div>
-                      <div class="flex items-center justify-between mx-2 px-0.5 py-0.5 rounded-xl text-red-500 font-medium ">
-                          <div class="text-xs bg-red-200 px-2 rounded-lg">- 7%</div>
-                      </div>
-                  </div>
-                  <div class="w-full h-1 rounded bg-gray-300 my-1">
-                      <div class="w-[33%] h-1 rounded bg-red-500"></div>
-                  </div>
-                  <div class="text-xs font-medium text-gray-400 ">Daily Goal</div>
-              </div>
+      <div
+        class="bg-white shadow-md shadow-inner rounded-xl flex items-start h-32 w-[90%] lg:w-1/2 justify-center py-4 px-8 mx-4 my-2">
+        <div class="flex items-center justify-start w-full">
+          <div class="flex-col w-[85%]">
+            <div class="text-sm font-medium text-yellow-600 my-2">BTC Price</div>
+            <div class="class flex items-center">
+              <div class="text-3xl font-bold text-gray-700">{{btc_price}}</div>
+            </div>
           </div>
+        </div>
       </div>
-
-  </div>
-  <div class="flex flex-col lg:flex-row ">
-      <div class="bg-white shadow-lg rounded-xl flex items-start max-w-1/2 w-[90%] lg:w-1/2 justify-center py-4 px-4 mx-4 my-2">
-          <div class="flex items-center justify-start w-full">
-              <div class="flex-col w-[85%]">
-                  <div class="text-sm font-medium text-violet-600 my-2">Weekly Income</div>
-                  <div class="class flex items-center">
-                      <div class="text-3xl font-bold text-gray-700">$6,568</div>
-                      <div class="flex items-center justify-between mx-2 px-0.5 py-0.5 rounded-xl text-green-500 font-medium ">
-                          <div class="text-xs bg-green-200 px-2 rounded-lg">+ 54%</div>
-                      </div>
-                  </div>
-                  <div class="flex items-center justify-between mt-4 ">
-                      <div class="flex-col">
-                          <div class="h-16 w-6 rounded-tr rounded-tl bg-gray-100 mx-2">
-                              <div class="h-[20%] w-6 rounded-tr rounded-tl bg-green-300"></div>
-                          </div>
-                          <div class="text-xs font-medium ml-2 text-gray-500">Mon</div>
-                      </div>
-                      <div class="flex-col">
-                          <div class="h-16 w-6 rounded-tr rounded-tl bg-gray-100 mx-2">
-                              <div class="h-[60%] w-6 rounded-tr rounded-tl bg-green-300"></div>
-                          </div>
-                          <div class="text-xs font-medium ml-2 text-gray-500">Tue</div>
-                      </div>
-                      <div class="flex-col">
-                          <div class="h-16 w-6 rounded-tr rounded-tl bg-gray-100 mx-2">
-                              <div class="h-[70%] w-6 rounded-tr rounded-tl bg-green-300"></div>
-                          </div>
-                          <div class="text-xs font-medium ml-2 text-gray-500">Wed</div>
-                      </div>
-                      <div class="flex-col">
-                          <div class="h-16 w-6 rounded-tr rounded-tl bg-gray-100 mx-2">
-                              <div class="h-[44%] w-6 rounded-tr rounded-tl bg-green-300"></div>
-                          </div>
-                          <div class="text-xs font-medium ml-2 text-gray-500">Thu</div>
-                      </div>
-                      <div class="flex-col">
-                          <div class="h-16 w-6 rounded-tr rounded-tl bg-gray-100 mx-2">
-                              <div class="h-[87%] w-6 rounded-tr rounded-tl bg-green-300"></div>
-                          </div>
-                          <div class="text-xs font-medium ml-2 text-gray-500">Fri</div>
-                      </div>
-                      <div class="flex-col">
-                          <div class="h-16 w-6 rounded-tr rounded-tl bg-gray-100 mx-2">
-                              <div class="h-[55%] w-6 rounded-tr rounded-tl bg-green-300"></div>
-                          </div>
-                          <div class="text-xs font-medium ml-2 text-gray-500">Sat</div>
-                      </div>
-                      <div class="flex-col">
-                          <div class="h-16 w-6 rounded-tr rounded-tl bg-gray-100 mx-2">
-                              <div class="h-[34%] w-6 rounded-tr rounded-tl bg-green-300"></div>
-                          </div>
-                          <div class="text-xs font-medium ml-2 text-gray-500">Sun</div>
-                      </div>
-                  </div>
-
-              </div>
-          </div>
-      </div>
-      <div class="bg-white shadow-lg rounded-xl flex items-start max-w-1/2 w-[90%] lg:w-1/2 justify-center py-4 px-4 mx-4 my-2">
-          <div class="flex items-center justify-start w-full">
-              <div class="flex-col w-[85%]">
-                  <div class="text-sm font-medium text-violet-600 my-2">Weekly Users</div>
-                  <div class="class flex items-center">
-                      <div class="text-3xl font-bold text-gray-700">16,568</div>
-                      <div class="flex items-center justify-between mx-2 px-0.5 py-0.5 rounded-xl text-red-500 font-medium ">
-                          <div class="text-xs bg-red-200 px-2 rounded-lg">- 8.7%</div>
-                      </div>
-                  </div>
-                  <div class="flex items-center justify-between mt-4 ">
-                      <div class="flex-col">
-                          <div class="h-16 w-6 rounded-tr rounded-tl bg-gray-100 mx-2">
-                              <div class="h-[79%] w-6 rounded-tr rounded-tl bg-violet-300"></div>
-                          </div>
-                          <div class="text-xs font-medium ml-2 text-gray-500">Mon</div>
-                      </div>
-                      <div class="flex-col">
-                          <div class="h-16 w-6 rounded-tr rounded-tl bg-gray-100 mx-2">
-                              <div class="h-[20%] w-6 rounded-tr rounded-tl bg-violet-300"></div>
-                          </div>
-                          <div class="text-xs font-medium ml-2 text-gray-500">Tue</div>
-                      </div>
-                      <div class="flex-col">
-                          <div class="h-16 w-6 rounded-tr rounded-tl bg-gray-100 mx-2">
-                              <div class="h-[30%] w-6 rounded-tr rounded-tl bg-violet-300"></div>
-                          </div>
-                          <div class="text-xs font-medium ml-2 text-gray-500">Wed</div>
-                      </div>
-                      <div class="flex-col">
-                          <div class="h-16 w-6 rounded-tr rounded-tl bg-gray-100 mx-2">
-                              <div class="h-[44%] w-6 rounded-tr rounded-tl bg-violet-300"></div>
-                          </div>
-                          <div class="text-xs font-medium ml-2 text-gray-500">Thu</div>
-                      </div>
-                      <div class="flex-col">
-                          <div class="h-16 w-6 rounded-tr rounded-tl bg-gray-100 mx-2">
-                              <div class="h-[67%] w-6 rounded-tr rounded-tl bg-violet-300"></div>
-                          </div>
-                          <div class="text-xs font-medium ml-2 text-gray-500">Fri</div>
-                      </div>
-                      <div class="flex-col">
-                          <div class="h-16 w-6 rounded-tr rounded-tl bg-gray-100 mx-2">
-                              <div class="h-[25%] w-6 rounded-tr rounded-tl bg-violet-300"></div>
-                          </div>
-                          <div class="text-xs font-medium ml-2 text-gray-500">Sat</div>
-                      </div>
-                      <div class="flex-col">
-                          <div class="h-16 w-6 rounded-tr rounded-tl bg-gray-100 mx-2">
-                              <div class="h-[64%] w-6 rounded-tr rounded-tl bg-violet-300"></div>
-                          </div>
-                          <div class="text-xs font-medium ml-2 text-gray-500">Sun</div>
-                      </div>
-                  </div>
-
-              </div>
-          </div>
-      </div>
-  </div>
+    </div>
   </div>
 </div>
-<section class="text-gray-600 body-font">
-  <div class="container mx-auto flex flex-col px-5 justify-center items-center">
-    <img class="lg:w-2/6 md:w-3/6 w-5/6 object-contain object-center rounded" alt="hero" src={% static 'img/hero.png' %}>
-    <div class="w-full md:w-2/3 flex flex-col mb-16 items-center text-center">
-      <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Migrants Training and Career Services</h1>
-      <p class="mb-8 leading-relaxed">
-        Our startup is focused on empowering migrants by providing them with the tools and resources
-        they need to succeed in their new communities. Our comprehensive training and career services aim
-        to bridge the gap for migrants and equip them with the skills and knowledge needed to thrive in the
-        job market. Our goal is to support and empower migrants, breaking down barriers and promoting diversity
-        and inclusiveness in the workplace.</p>
-      <form action="{% url 'search_results' %}" method="get">
-        <div class="flex w-full justify-center items-end">
-          <div class="relative mr-4 lg:w-full md:w-full text-left">
-            <label for="hero-field" class="leading-7 text-sm text-gray-600">Search Certificate</label>
-            <input type="text" id="hero-field" name="q" class="w-full bg-gray-100 bg-opacity-50 rounded focus:ring-2 focus:ring-yellow-200 focus:bg-transparent border border-gray-300 focus:border-yellow-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+<section class="text-gray-700 body-font">
+  <div class="container px-5 py-24 mx-auto flex flex-wrap">
+    <div class="w-full mb-6 py-6 flex justify-between items-center border-b border-gray-200">
+      <div>
+        <h1 class="text-4xl text-gray-800">Buy Order</h1>
+      </div>
+      <div>
+        <a class="text-gray-500 hover:text-blue-500" href="{% url 'orders:order-create' %}">
+          Create a new order
+        </a>
+      </div>
+    </div>
+    <div class="flex flex-col w-full">
+      <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+          <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    User
+                  </th>
+                  <th scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Type
+                  </th>
+                  <th scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Status
+                  </th>
+                  <th scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Date
+                  </th>
+                  <th scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Price
+                  </th>
+                  <th scope="col" class="relative px-6 py-3">
+                    <span class="sr-only">Edit</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for order in buy_orders %}
+                <tr class="bg-white">
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    <a class="text-blue-500 hover:text-blue-800"
+                      href="{% url 'orders:order-detail' user.pk %}">{{ user }}</a>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {{ order.order_type }}
+                  </td>
+                  {% if  order.order_status == 'Open'%}
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-green-500">
+                    {{ order.order_status }}
+                  </td>
+                  {% else %}
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-red-500">
+                    {{ order.order_status }}
+                  </td>
+                  {% endif %}
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {{ order.date_of_creation|date:"D d M Y" }}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {{ order.order_price }}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <a href="{% url 'orders:order-update' order.pk %}"
+                      class="text-yellow-600 hover:text-yellow-900">
+                      Edit
+                    </a>
+                  </td>
+                </tr>
+
+                {% empty %}
+
+                <p>There are currently no orders</p>
+
+                {% endfor %}
+              </tbody>
+            </table>
           </div>
-          <button type="submit" class="inline-flex text-white bg-yellow-500 border-0 py-2 px-6 focus:outline-none hover:bg-yellow-600 rounded text-lg">Search</button>
         </div>
-        <p class="text-sm mt-2 text-gray-500 mb-8 w-full">Es"0x00000000000000000"</p>
-      </form>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="text-gray-700 body-font">
+  <div class="container px-5 py-24 mx-auto flex flex-wrap">
+    <div class="w-full mb-6 py-6 flex justify-between items-center border-b border-gray-200">
+      <div>
+        <h1 class="text-4xl text-gray-800">Sell Order</h1>
+      </div>
+    </div>
+    <div class="flex flex-col w-full">
+      <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+          <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    User
+                  </th>
+                  <th scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Type
+                  </th>
+                  <th scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Status
+                  </th>
+                  <th scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Date
+                  </th>
+                  <th scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Price
+                  </th>
+                  <th scope="col" class="relative px-6 py-3">
+                    <span class="sr-only">Edit</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for order in sell_orders %}
+                <tr class="bg-white">
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    <a class="text-blue-500 hover:text-blue-800"
+                      href="{% url 'orders:order-detail' user.pk %}">{{ user }}</a>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {{ order.order_type }}
+                  </td>
+                  {% if  order.order_status == 'Open'%}
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-green-500">
+                    {{ order.order_status }}
+                  </td>
+                  {% else %}
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-red-500">
+                    {{ order.order_status }}
+                  </td>
+                  {% endif %}
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {{ order.date_of_creation|date:"D d M Y" }}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {{ order.order_price }}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <a href="{% url 'orders:order-update' order.pk %}"
+                      class="text-yellow-600 hover:text-yellow-900">
+                      Edit
+                    </a>
+                  </td>
+                </tr>
+
+                {% empty %}
+
+                <p>There are currently no orders</p>
+
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>

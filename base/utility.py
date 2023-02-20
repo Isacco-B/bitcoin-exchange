@@ -1,7 +1,5 @@
 from random import randint
 import requests
-from pprint import pprint
-import json
 
 
 class BtcPrice():
@@ -19,6 +17,11 @@ class BtcPrice():
     def fetchCurrenciesData(self):
         r = requests.get(url=self.url, headers=self.headers, params=self.params).json()
         return r['data']['BTC']['quote']['USD']['price']
+
+def btc_price():
+    bot = BtcPrice()
+    current_price = bot.fetchCurrenciesData()
+    return current_price
 
 
 def random_btc_amount():

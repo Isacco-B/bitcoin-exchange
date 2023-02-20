@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils import timezone
 from djongo.models.fields import ObjectIdField, Field
 from django.db.models.signals import post_save
 from django.contrib.auth.models import AbstractUser
@@ -49,8 +48,8 @@ class Order(models.Model):
     order_type = models.CharField(choices=ORDER_TYPE, default='Buy', max_length=50)
     order_status = models.CharField(choices=ORDER_STATUS, default='Open', max_length=50)
     btc_amount = models.FloatField(default= 0)
-    order_price = models.FloatField(default=0, editable=False)
-    date_of_creation = models.DateField(default=timezone.localdate())
+    order_price = models.FloatField(default=0)
+    date_of_creation = models.DateField(auto_now_add=True)
     user = models.ForeignKey("User", on_delete=models.CASCADE)
 
     class Meta:

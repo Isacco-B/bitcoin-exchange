@@ -8,8 +8,8 @@ class OrderForm(forms.ModelForm):
         model = Order
         fields = (
             "order_type",
+            'btc_amount',
             'order_price',
-            'date_of_creation',
             )
 
 
