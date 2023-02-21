@@ -4,15 +4,24 @@
     <a href={% url 'landing-page' %} class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
       <span class="ml-3 text-xl">ExchangeBtc</span>
     </a>
+    {% if request.user.is_staff %}
     <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
       <a href={% url 'profile:profile-list' %} class="mr-5 hover:text-gray-900"> Users </a>
-      <a href={% url 'orders:order-list' %} class="mr-5 hover:text-gray-900"> Orders </a>
     </nav>
+    {% else %}
+    <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
+    </nav>
+    {% endif %}
     {% if request.user.is_authenticated %}
     <a class="inline-flex items-center py-1 px-3 mr-5 focus:outline-none hover: rounded text-base mt-4 md:mt-0">{{user.username|upper}}
       <img class="w-4 h-4 ml-1" src={% static 'img/user-profile.svg' %} alt="">
     </a>
     <a href={% url 'profile:profile-detail' user.pk%} class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 mr-5 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Profile
+      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+        <path d="M5 12h14M12 5l7 7-7 7"></path>
+      </svg>
+    </a>
+    <a href={% url 'orders:order-list'%} class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 mr-5 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Orders
       <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
         <path d="M5 12h14M12 5l7 7-7 7"></path>
       </svg>
