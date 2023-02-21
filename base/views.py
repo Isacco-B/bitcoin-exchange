@@ -11,8 +11,8 @@ class LandingPageView(LoginRequiredMixin, generic.TemplateView):
     def get_context_data(self, *args, **kwargs):
         user = User.objects.get(username=self.request.user.username)
         context = {
-            'buy_orders' : Order.objects.filter(order_type='Buy').order_by('-date_of_creation'),
-            'sell_orders' :Order.objects.filter(order_type='Sell').order_by('-date_of_creation'),
+            'buy_orders' : Order.objects.filter(order_type='Buy', user=user).order_by('-date_of_creation'),
+            'sell_orders' :Order.objects.filter(order_type='Sell', user=user).order_by('-date_of_creation'),
             'user' : user,
             'btc_price' : round(btc_price() * user.wallet_btc, 2)
         }

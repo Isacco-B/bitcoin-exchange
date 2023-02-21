@@ -1,17 +1,40 @@
 from django import forms
+from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import UserCreationForm, UsernameField
 from base.models import Order, User
 
 class OrderForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop(
+            "request", None
+        )
+        super(OrderForm, self).__init__(*args, **kwargs)
 
     class Meta:
         model = Order
         fields = (
-            "order_type",
+            'order_type',
             'btc_amount',
             'order_price',
             )
 
+    def clean_btc_amount(self):
+        data = self.cleaned_data['btc_amount']
+        user = User.objects.get(username = self.request.user)
+        if data > user.wallet_btc:
+            raise ValidationError('insufficient funds')
+        elif data <= 0:
+            raise ValidationError('enter a number greater than zero')
+        return data
+
+    def clean_order_price(self):
+        data = self.cleaned_data['order_price']
+        user = User.objects.get(username = self.request.user)
+        if data > user.usd_balance:
+            raise ValidationError('insufficient funds')
+        elif data <= 0:
+            raise ValidationError('enter a number greater than zero')
+        return data
 
 class UserForm(UserCreationForm):
 

@@ -33,35 +33,37 @@
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Date
                             </th>
-                            {% comment %} {% if request.user.is_authenticated %}
                             <th scope="col" class="relative px-6 py-3">
-                            <span class="sr-only">Edit</span>
+                            <span class="sr-only">Detail</span>
                             </th>
-                            {% endif %} {% endcomment %}
                         </tr>
                     </thead>
                     <tbody>
                         {% for order in orders %}
                             <tr class="bg-white">
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                    <a class="text-blue-500 hover:text-blue-800" href="{% url 'orders:order-detail' user.pk %}">{{ user }}</a>
+                                    {{ order.user.username }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {{ order.order_type }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                {% if  order.order_status == 'Open'%}
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-green-500">
                                     {{ order.order_status }}
                                 </td>
+                                {% else %}
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-red-500">
+                                    {{ order.order_status }}
+                                </td>
+                                {% endif %}
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {{ order.date_of_creation|date:"D d M Y" }}
                                 </td>
-                                {% comment %} {% if request.user.is_staff %}
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a href="{% url 'certificates:certificate-update' certificate.pk %}" class="text-yellow-600 hover:text-yellow-900">
-                                        Edit
+                                    <a class="text-blue-500 hover:text-blue-800" href="{% url 'orders:order-detail' order.pk %}">
+                                        Detail
                                     </a>
                                 </td>
-                                {% endif %} {% endcomment %}
                             </tr>
 
                         {% empty %}
