@@ -1,18 +1,15 @@
 from django.contrib.auth.signals import user_logged_in
-from django.db.models.signals import post_save, post_init
+from django.db.models.signals import post_save, post_delete, pre_save
 from django.dispatch import receiver
 from django.contrib import messages
 from .models import User, Order
-from .utility import check_order_match
-from pprint import pprint
-
+from .utility import check_order_match, update_user_profile
 
 @receiver(user_logged_in)
 def login_success(sender, request, user, **kwargs):
     user_ip = request.META['REMOTE_ADDR']
     user = User.objects.get(username=user.username)
     user_last_ip = user.ips
-    print(user_last_ip)
     if not user_last_ip:
         user_last_ip.append(user_ip)
         User.objects.filter(username=user.username).update(ips=user_last_ip)
@@ -22,21 +19,23 @@ def login_success(sender, request, user, **kwargs):
         User.objects.filter(username=user.username).update(ips=user_last_ip)
 
 
-@receiver(post_save)
-def create_order(sender, instance, created, **kwargs):
+@receiver(post_save, sender=Order)
+def create_order(instance, created, **kwargs):
         if created:
             check_order_match()
+            update_user_profile(instance, old_order=None, type='create')
 
-@receiver(post_save)
-def update_order(sender, instance, created, **kwargs):
-        if not created:
+@receiver(pre_save, sender=Order)
+def update_order(sender, instance, **kwargs):
+    if instance.id is not None:
+        current_order = instance
+        old_order = Order.objects.get(id=instance.id)
+        if current_order.order_price != old_order.order_price or current_order.btc_amount != old_order.btc_amount :
+            print('update')
             check_order_match()
+            update_user_profile(current_order, old_order, 'update')
 
 
-# @receiver(pre_save, sender=Order)
-# def update_order(sender, instance, **kwargs):
-#     if instance.id is not None:
-#         current_order = instance
-#         old_order = Order.objects.get(id=instance.id)
-#         if current_order.order_price != old_order.order_price:
-#             check_order_match()
+@receiver(post_delete, sender=Order)
+def delete_order(instance, **kwargs):
+    update_user_profile(instance, old_order=None,  type='delete')

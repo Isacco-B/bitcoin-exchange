@@ -1,8 +1,6 @@
 from django.db.models import Q
 from base import models
 from random import randint
-from pymongo import MongoClient
-from pprint import pprint
 import requests
 
 
@@ -22,15 +20,46 @@ class BtcPrice():
         r = requests.get(url=self.url, headers=self.headers, params=self.params).json()
         return r['data']['BTC']['quote']['USD']['price']
 
+
 def btc_price():
     bot = BtcPrice()
     current_price = bot.fetchCurrenciesData()
     return current_price
 
+
 def random_btc_amount():
     btc_amount = randint(1,10)
     return btc_amount
 
+
+def update_user_profile(current_order, old_order, type):
+    user = models.User.objects.filter(pk=current_order.user.pk)
+    user_usd_balance = user.get().usd_balance
+    user_btc_balance = user.get().wallet_btc
+
+    if type == 'create':
+        if current_order.order_type == 'Sell':
+            user.update(wallet_btc = user_btc_balance - current_order.btc_amount)
+        else:
+            user.update(usd_balance = user_usd_balance - current_order.order_price)
+    elif type == 'update':
+        btc_difference = current_order.btc_amount - old_order.btc_amount
+        usd_difference = current_order.order_price - old_order.order_price
+        if current_order.order_type == 'Buy':
+            if current_order.order_price > old_order.order_price:
+                user.update(usd_balance = user_usd_balance - usd_difference)
+            else:
+                user.update(usd_balance = user_usd_balance - usd_difference)
+        else:
+            if current_order.btc_amount > old_order.btc_amount:
+                user.update(wallet_btc = user_btc_balance - btc_difference)
+            else:
+                user.update(wallet_btc = user_btc_balance - btc_difference)
+    else:
+        if current_order.order_type == 'Sell':
+            user.update(wallet_btc = user_btc_balance + current_order.btc_amount)
+        elif current_order.order_type == 'Buy':
+            user.update(usd_balance = user_usd_balance + current_order.order_price)
 
 
 def check_order_match():
@@ -42,7 +71,9 @@ def check_order_match():
             btc_amount = buy_order.btc_amount
             for sell_order in sell_orders.filter(~Q(user=buy_order.user),order_price__lte=order_price, btc_amount=btc_amount,):
                 if sell_order:
-                    return order_match(sell_order, buy_order)
+                    print(sell_order.order_price)
+                    print(buy_order.order_price)
+                    order_match(sell_order, buy_order)
 
 
 def order_match(sell_order, buy_order):
@@ -50,45 +81,49 @@ def order_match(sell_order, buy_order):
     sell_user = models.User.objects.filter(pk=sell_order.user.pk)
     buy_user_btc = buy_user.get().wallet_btc
     buy_user_usd = buy_user.get().usd_balance
-    sell_user_btc = sell_user.get().wallet_btc
+    buy_user_profit = buy_user.get().profit
     sell_user_usd = sell_user.get().usd_balance
-    buy_user.update(wallet_btc = buy_user_btc + sell_order.btc_amount, usd_balance = buy_user_usd - sell_order.order_price)
-    sell_user.update(wallet_btc = sell_user_btc - buy_order.btc_amount, usd_balance = sell_user_usd + buy_order.order_price)
-    sell_order.order_status = 'Close'
-    buy_order.order_status = 'Close'
-    sell_order.save()
-    buy_order.save()
-    return save_order_transaction()
+    sell_user_profit = sell_user.get().profit
+    if buy_order.order_price > sell_order.order_price:
+        price_difference = buy_order.order_price - sell_order.order_price
+        buy_user.update(
+            wallet_btc = buy_user_btc + sell_order.btc_amount,
+            usd_balance = buy_user_usd + price_difference,
+            profit = buy_user_profit - sell_order.order_price
+            )
+        sell_user.update(
+            usd_balance = sell_user_usd + buy_order.order_price - price_difference,
+            profit = sell_user_profit + sell_order.order_price
+            )
+        sell_order.order_status = 'Close'
+        sell_order.buyer_user = str(buy_user.get().username)
+        sell_order.selling_price = sell_order.order_price
 
-def save_order_transaction():
-    client = MongoClient("mongodb://localhost:27017")
-    db = client.exchange
-    order_collection = db.orders_transactions
-    order_collection.insert_one(
-        {
-        "name" : "Isacco",
-        "subname" : "Bertoli",
-        "age" : 22,
-        "hobby" : ["moto","calcio","palestra"]
-    }
-    )
+        buy_order.order_status = 'Close'
+        buy_order.buyer_user = str(sell_user.get().username)
+        buy_order.selling_price = sell_order.order_price
+        buy_order.order_refund = price_difference
 
+        sell_order.save()
+        buy_order.save()
 
+    else:
+        buy_user.update(
+            wallet_btc = buy_user_btc + sell_order.btc_amount,
+            profit = buy_user_profit - sell_order.order_price
+            )
+        sell_user.update(
+            usd_balance = sell_user_usd + buy_order.order_price,
+            profit = sell_user_profit + sell_order.order_price
+            )
 
-    # for b_order in buy_order:
-    #     buy_price = b_order.order_price
-    #     for s_order in sell_order.filter(order_price__lte=buy_price):
-    #         ss_order = models.Order.objects.get(pk=s_order.pk)
-    #         bb_order = models.Order.objects.get(pk=b_order.pk)
-    #         sell_user = models.User.objects.filter(username=s_order.user)
-    #         buy_user = models.User.objects.filter(username=b_order.user)
-    #         sell_wallet = sell_user.get().wallet_btc
-    #         buy_wallet = buy_user.get().wallet_btc
-    #         sell_wallet -= bb_order.btc_amount
-    #         buy_wallet += bb_order.btc_amount
-    #         sell_user.update(wallet_btc=sell_wallet)
-    #         buy_user.update(wallet_btc=buy_wallet)
-    #         ss_order.order_status = 'Close'
-    #         bb_order.order_status = 'Close'
-    #         ss_order.save()
-    #         bb_order.save()
+        sell_order.order_status = 'Close'
+        sell_order.buyer_user = str(buy_user.get().username)
+        sell_order.selling_price = sell_order.order_price
+
+        buy_order.order_status = 'Close'
+        buy_order.buyer_user = str(sell_user.get().username)
+        buy_order.selling_price = sell_order.order_price
+
+        sell_order.save()
+        buy_order.save()

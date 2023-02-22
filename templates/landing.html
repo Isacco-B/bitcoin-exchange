@@ -10,18 +10,7 @@
           <div class="flex-col w-[85%]">
             <div class="text-sm font-medium text-yellow-600 my-2">BTC Balance</div>
             <div class="class flex items-center">
-              <div class="text-3xl font-bold text-gray-700">{{user.wallet_btc}}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        class="bg-white shadow-md shadow-inner rounded-xl flex items-start h-32 w-[90%] lg:w-1/2 justify-center py-4 px-8 mx-4 my-2">
-        <div class="flex items-center justify-start w-full">
-          <div class="flex-col w-[85%]">
-            <div class="text-sm font-medium text-yellow-600 my-2">USD Balance</div>
-            <div class="class flex items-center">
-              <div class="text-3xl font-bold text-gray-700">{{user.usd_balance}}</div>
+              <div class="text-3xl font-bold text-gray-700">{{user.wallet_btc|floatformat:2}}</div>
             </div>
           </div>
         </div>
@@ -32,7 +21,29 @@
           <div class="flex-col w-[85%]">
             <div class="text-sm font-medium text-yellow-600 my-2">BTC Price</div>
             <div class="class flex items-center">
-              <div class="text-3xl font-bold text-gray-700">{{btc_price}}</div>
+              <div class="text-3xl font-bold text-gray-700">{{btc_price|floatformat:2}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="bg-white shadow-md shadow-inner rounded-xl flex items-start h-32 w-[90%] lg:w-1/2 justify-center py-4 px-8 mx-4 my-2">
+        <div class="flex items-center justify-start w-full">
+          <div class="flex-col w-[85%]">
+            <div class="text-sm font-medium text-yellow-600 my-2">USD Balance</div>
+            <div class="class flex items-center">
+              <div class="text-3xl font-bold text-gray-700">{{user.usd_balance|floatformat:2}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="bg-white shadow-md shadow-inner rounded-xl flex items-start h-32 w-[90%] lg:w-1/2 justify-center py-4 px-8 mx-4 my-2">
+        <div class="flex items-center justify-start w-full">
+          <div class="flex-col w-[85%]">
+            <div class="text-sm font-medium text-yellow-600 my-2">Profit/Loss</div>
+            <div class="class flex items-center">
+              <div class="text-3xl font-bold text-gray-700">{{user.profit|floatformat:2}}</div>
             </div>
           </div>
         </div>
@@ -107,14 +118,23 @@
                     {{ order.date_of_creation|date:"D d M Y" }}
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {{ order.order_price }}
+                    {{ order.order_price|floatformat:2 }}
                   </td>
+                  {% if  order.order_status == 'Open'%}
                   <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <a href="{% url 'orders:order-update' order.pk %}"
                       class="text-yellow-600 hover:text-yellow-900">
                       Edit
                     </a>
                   </td>
+                  {% else %}
+                  <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <a href="{% url 'orders:order-detail' order.pk %}"
+                      class="text-yellow-600 hover:text-yellow-900">
+                      Detail
+                    </a>
+                  </td>
+                  {% endif %}
                 </tr>
 
                 {% empty %}
@@ -192,14 +212,23 @@
                     {{ order.date_of_creation|date:"D d M Y" }}
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {{ order.order_price }}
+                    {{ order.order_price|floatformat:2 }}
                   </td>
+                  {% if  order.order_status == 'Open'%}
                   <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <a href="{% url 'orders:order-update' order.pk %}"
                       class="text-yellow-600 hover:text-yellow-900">
                       Edit
                     </a>
                   </td>
+                  {% else %}
+                  <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <a href="{% url 'orders:order-detail' order.pk %}"
+                      class="text-yellow-600 hover:text-yellow-900">
+                      Detail
+                    </a>
+                  </td>
+                  {% endif %}
                 </tr>
 
                 {% empty %}

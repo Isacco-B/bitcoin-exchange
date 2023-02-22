@@ -19,13 +19,14 @@ class OrderForm(forms.ModelForm):
             )
 
     def clean_btc_amount(self):
-        data = self.cleaned_data['btc_amount']
+        btc_amount = self.cleaned_data['btc_amount']
+        order_type = self.cleaned_data['order_type']
         user = User.objects.get(username = self.request.user)
-        if data > user.wallet_btc:
+        if btc_amount > user.wallet_btc:
             raise ValidationError('insufficient funds')
-        elif data <= 0:
+        elif btc_amount <= 0:
             raise ValidationError('enter a number greater than zero')
-        return data
+        return btc_amount
 
     def clean_order_price(self):
         data = self.cleaned_data['order_price']
