@@ -58,7 +58,11 @@
         <h1 class="text-4xl text-gray-800">Buy Order</h1>
       </div>
       <div>
-        <a class="text-gray-500 hover:text-blue-500" href="{% url 'orders:order-create' %}">
+        <a class="text-gray-500 hover:text-blue-500" href="{% url 'orders:order-report' 'Buy' %}">
+          Order report
+        </a>
+        <br>
+        <a class="text-gray-500 hover:text-blue-500 lg:pr-4" href="{% url 'orders:order-create' %}">
           Create a new order
         </a>
       </div>
@@ -84,11 +88,15 @@
                   </th>
                   <th scope="col"
                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Date
+                    Qty
                   </th>
                   <th scope="col"
                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Price
+                  </th>
+                  <th scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Date
                   </th>
                   <th scope="col" class="relative px-6 py-3">
                     <span class="sr-only">Edit</span>
@@ -100,7 +108,7 @@
                 <tr class="bg-white">
                   <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                     <a class="text-blue-500 hover:text-blue-800"
-                      href="{% url 'orders:order-detail' user.pk %}">{{ user }}</a>
+                      href="{% url 'profile:profile-detail' order.user.pk %}">{{ order.user.username }}</a>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {{ order.order_type }}
@@ -115,10 +123,13 @@
                   </td>
                   {% endif %}
                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {{ order.date_of_creation|date:"D d M Y" }}
+                    {{ order.btc_amount|floatformat:2 }} BTC
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {{ order.order_price|floatformat:2 }}
+                    {{ order.order_price|floatformat:2 }} $
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {{ order.date_of_creation|date:"d-m-Y H:i" }}
                   </td>
                   {% if  order.order_status == 'Open'%}
                   <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -156,6 +167,15 @@
       <div>
         <h1 class="text-4xl text-gray-800">Sell Order</h1>
       </div>
+      <div>
+        <a class="text-gray-500 hover:text-blue-500" href="{% url 'orders:order-report' 'Sell' %}">
+          Order report
+        </a>
+        <br>
+        <a class="text-gray-500 hover:text-blue-500 lg:pr-4" href="{% url 'orders:order-create' %}">
+          Create a new order
+        </a>
+      </div>
     </div>
     <div class="flex flex-col w-full">
       <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -178,11 +198,15 @@
                   </th>
                   <th scope="col"
                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Date
+                    Price
                   </th>
                   <th scope="col"
                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Price
+                    Qty
+                  </th>
+                  <th scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Date
                   </th>
                   <th scope="col" class="relative px-6 py-3">
                     <span class="sr-only">Edit</span>
@@ -194,7 +218,7 @@
                 <tr class="bg-white">
                   <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                     <a class="text-blue-500 hover:text-blue-800"
-                      href="{% url 'orders:order-detail' user.pk %}">{{ user }}</a>
+                    href="{% url 'profile:profile-detail' order.user.pk %}">{{ order.user.username }}</a>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {{ order.order_type }}
@@ -209,10 +233,13 @@
                   </td>
                   {% endif %}
                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {{ order.date_of_creation|date:"D d M Y" }}
+                    {{ order.btc_amount|floatformat:2 }} BTC
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {{ order.order_price|floatformat:2 }}
+                    {{ order.order_price|floatformat:2 }} $
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {{ order.date_of_creation|date:"d-m-Y H:i" }}
                   </td>
                   {% if  order.order_status == 'Open'%}
                   <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
