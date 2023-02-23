@@ -18,7 +18,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from base.views import LandingPageView
-from base.views import SignupView, SearchResultsView
+from base.views import SignupView
 from django.contrib.auth.views import (
     LoginView,
     LogoutView,
@@ -35,7 +35,6 @@ urlpatterns = [
     path('', LandingPageView.as_view(), name='landing-page'),
     path('profile/', include('profile.urls', namespace='profile')),
     path('orders/', include('order.urls', namespace='orders')),
-    path('search/', SearchResultsView.as_view(), name='search_results' ),
 
     path('login/', LoginView.as_view(), name='login'),
     path('signup/', SignupView.as_view(), name='signup'),

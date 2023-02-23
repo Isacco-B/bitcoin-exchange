@@ -6,8 +6,6 @@ from base.models import User
 from base.forms import UserUpdateForm
 
 
-
-
 class UserListView(LoginRequiredMixin, generic.ListView):
     template_name = 'profile/profile_list.html'
     context_object_name = 'users'
@@ -42,7 +40,6 @@ class UserUpdateView(LoginRequiredMixin, generic.UpdateView):
         form.save()
         messages.info(self.request, 'You have successfuly update a user')
         return super(UserUpdateForm, self).form_valid(form)
-
 
 
 class UserDeleteView(LoginRequiredMixin, generic.DeleteView):

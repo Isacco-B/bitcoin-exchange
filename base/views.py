@@ -26,16 +26,6 @@ class SignupView(generic.CreateView):
     def get_success_url(self) -> str:
         return reverse('login')
 
-class SearchResultsView(generic.ListView):
-    model = Order
-    template_name = 'search_result.html'
-    context_object_name = 'orders'
-
-    def get_queryset(self):
-        query = self.request.GET.get('q')
-        object_list = Order.objects.all()
-        return object_list
-
 
 
 

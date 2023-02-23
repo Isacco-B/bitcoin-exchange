@@ -1,8 +1,7 @@
 from django.db import models
-from djongo.models.fields import ObjectIdField, Field
-from django.db.models.signals import post_save
 from django.contrib.auth.models import AbstractUser
 from base.utility import random_btc_amount
+
 
 
 class User(AbstractUser):
@@ -55,7 +54,7 @@ class Order(models.Model):
     selling_price = models.FloatField(default=0)
     order_refund = models.FloatField(default=0)
     buyer_user = models.CharField(null=True, blank=True, max_length=20)
-    date_of_creation = models.DateField(auto_now_add=True)
+    date_of_creation = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:

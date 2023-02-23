@@ -3,7 +3,7 @@ from django.db.models.signals import post_save, post_delete, pre_save
 from django.dispatch import receiver
 from django.contrib import messages
 from .models import User, Order
-from .utility import check_order_match, update_user_profile
+from order.views import check_order_match, update_user_profile
 
 @receiver(user_logged_in)
 def login_success(sender, request, user, **kwargs):
@@ -31,8 +31,6 @@ def update_order(sender, instance, **kwargs):
         current_order = instance
         old_order = Order.objects.get(id=instance.id)
         if current_order.order_price != old_order.order_price or current_order.btc_amount != old_order.btc_amount :
-            print('update')
-            check_order_match()
             update_user_profile(current_order, old_order, 'update')
 
 
