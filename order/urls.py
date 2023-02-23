@@ -20,6 +20,7 @@ from .views import (
     OrderDetailView,
     OrderUpdateView,
     OrderDeleteView,
+    OrderJsonView,
 )
 
 app_name = 'orders'
@@ -30,4 +31,5 @@ urlpatterns = [
     path('<int:pk>/', OrderDetailView.as_view(), name='order-detail'),
     path('update/<int:pk>/', OrderUpdateView.as_view(), name='order-update'),
     path('delete/<int:pk>/', OrderDeleteView.as_view(), name='order-delete'),
+    path('report/<str:type>', OrderJsonView.as_view(), name='order-report'),
 ]
