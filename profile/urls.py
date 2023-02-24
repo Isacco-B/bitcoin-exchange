@@ -17,7 +17,6 @@ from django.urls import path
 from .views import (
     UserListView,
     UserDetailView,
-    UserUpdateView,
     UserDeleteView,
     )
 
@@ -26,7 +25,6 @@ app_name = 'profile'
 urlpatterns = [
     path('', UserListView.as_view(), name='profile-list'),
     path('<int:pk>/', UserDetailView.as_view(), name='profile-detail'),
-    path('update/<int:pk>/', UserUpdateView.as_view(), name='profile-update'),
     path('delete/<int:pk>/', UserDeleteView.as_view(), name='profile-delete'),
 
 ]

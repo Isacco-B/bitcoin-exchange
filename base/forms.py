@@ -93,17 +93,3 @@ class UserForm(UserCreationForm):
             'phone_number',
             )
         field_classes = {"username": UsernameField}
-
-class UserUpdateForm(forms.ModelForm):
-
-    class Meta:
-        model = User
-        fields =  (
-            'username',
-            'first_name',
-            'last_name',
-            'email',
-            'age',
-            'address',
-            'phone_number',
-        )
