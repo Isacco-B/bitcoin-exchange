@@ -133,15 +133,13 @@
                   </td>
                   {% if  order.order_status == 'Open'%}
                   <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <a href="{% url 'orders:order-update' order.pk %}"
-                      class="text-yellow-600 hover:text-yellow-900">
+                    <a href="{% url 'orders:order-update' order.pk %}" class="text-yellow-600 hover:text-yellow-900">
                       Edit
                     </a>
                   </td>
                   {% else %}
                   <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <a href="{% url 'orders:order-detail' order.pk %}"
-                      class="text-yellow-600 hover:text-yellow-900">
+                    <a href="{% url 'orders:order-detail' order.pk %}" class="text-yellow-600 hover:text-yellow-900">
                       Detail
                     </a>
                   </td>
@@ -218,7 +216,7 @@
                 <tr class="bg-white">
                   <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                     <a class="text-blue-500 hover:text-blue-800"
-                    href="{% url 'profile:profile-detail' order.user.pk %}">{{ order.user.username }}</a>
+                      href="{% url 'profile:profile-detail' order.user.pk %}">{{ order.user.username }}</a>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {{ order.order_type }}
@@ -243,15 +241,13 @@
                   </td>
                   {% if  order.order_status == 'Open'%}
                   <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <a href="{% url 'orders:order-update' order.pk %}"
-                      class="text-yellow-600 hover:text-yellow-900">
+                    <a href="{% url 'orders:order-update' order.pk %}" class="text-yellow-600 hover:text-yellow-900">
                       Edit
                     </a>
                   </td>
                   {% else %}
                   <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <a href="{% url 'orders:order-detail' order.pk %}"
-                      class="text-yellow-600 hover:text-yellow-900">
+                    <a href="{% url 'orders:order-detail' order.pk %}" class="text-yellow-600 hover:text-yellow-900">
                       Detail
                     </a>
                   </td>
@@ -259,9 +255,7 @@
                 </tr>
 
                 {% empty %}
-
                 <p>There are currently no orders</p>
-
                 {% endfor %}
               </tbody>
             </table>

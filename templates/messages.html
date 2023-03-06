@@ -1,6 +1,6 @@
 {% if messages %}
-  {% for message in messages %}
-      <div class="p-4 border-l-4
+{% for message in messages %}
+<div class="p-4 border-l-4
           {% if message.tags == 'success' %}
               bg-green-50 border-green-400
           {% elif message.tags == 'info'%}
@@ -10,8 +10,8 @@
           {% else %}
               bg-red-50 border-red-400
           ">
-          {% endif %}
-              <p class="text-sm
+    {% endif %}
+    <p class="text-sm
                   {% if message.tags == 'success' %}
                       text-green-700
                   {% elif message.tags == 'info'%}
@@ -22,8 +22,8 @@
                       text-red-700
                   {% endif %}
                   ">
-                      {{message}}
-              </p>
-      </div>
-  {% endfor %}
+        {{message}}
+    </p>
+</div>
+{% endfor %}
 {% endif %}

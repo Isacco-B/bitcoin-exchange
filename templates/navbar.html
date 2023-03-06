@@ -16,29 +16,39 @@
     <a class="inline-flex items-center py-1 px-3 mr-5 focus:outline-none hover: rounded text-base mt-4 md:mt-0">{{user.username|upper}}
       <img class="w-4 h-4 ml-1" src={% static 'img/user-profile.svg' %} alt="">
     </a>
-    <a href={% url 'profile:profile-detail' user.pk%} class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 mr-5 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Profile
-      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+    <a href={% url 'profile:profile-detail' user.pk%}
+      class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 mr-5 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Profile
+      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        class="w-4 h-4 ml-1" viewBox="0 0 24 24">
         <path d="M5 12h14M12 5l7 7-7 7"></path>
       </svg>
     </a>
-    <a href={% url 'orders:order-list'%} class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 mr-5 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Orders
-      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+    <a href={% url 'orders:order-list'%}
+      class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 mr-5 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Orders
+      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        class="w-4 h-4 ml-1" viewBox="0 0 24 24">
         <path d="M5 12h14M12 5l7 7-7 7"></path>
       </svg>
     </a>
-    <a href={% url 'logout' %} class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 mr-5 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Logout
-      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+    <a href={% url 'logout' %}
+      class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 mr-5 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Logout
+      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        class="w-4 h-4 ml-1" viewBox="0 0 24 24">
         <path d="M5 12h14M12 5l7 7-7 7"></path>
       </svg>
     </a>
     {% else %}
-    <a href={% url 'login' %} class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 mr-5 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Login
-      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+    <a href={% url 'login' %}
+      class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 mr-5 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Login
+      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        class="w-4 h-4 ml-1" viewBox="0 0 24 24">
         <path d="M5 12h14M12 5l7 7-7 7"></path>
       </svg>
     </a>
-    <a href={% url 'signup' %} class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 mr-5 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Register
-      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+    <a href={% url 'signup' %}
+      class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 mr-5 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Register
+      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        class="w-4 h-4 ml-1" viewBox="0 0 24 24">
         <path d="M5 12h14M12 5l7 7-7 7"></path>
       </svg>
     </a>

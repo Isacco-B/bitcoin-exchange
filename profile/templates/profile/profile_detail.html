@@ -7,47 +7,50 @@
   <div class="container px-5 py-24 mx-auto">
     <div class="lg:w-4/5 mx-auto flex flex-wrap">
       <div class="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
-          <h2 class="text-sm title-font text-gray-500 tracking-widest">PROFILE {{users.username|upper}}</h2>
-          <div class="flex mb-4">
-              <a href={% url 'profile:profile-detail' user.pk %} class="flex-grow text-yellow-500 border-b-2 border-yellow-500 py-2 text-lg px-1">
-                  Overview
-              </a>
-          </div>
-          <div class="flex border-t border-gray-300 py-2">
-              <span class="text-gray-500">Username</span>
-              <span class="ml-auto text-gray-900">{{ users.username }}</span>
-          </div>
-          <div class="flex border-t border-gray-300 py-2">
-              <span class="text-gray-500">First_name</span>
-              <span class="ml-auto text-gray-900">{{ users.first_name }}</span>
-          </div>
-          <div class="flex border-t border-b mb-6 border-gray-300 py-2">
-              <span class="text-gray-500">Last_name</span>
-              <span class="ml-auto text-gray-900">{{ users.last_name}}</span>
-          </div>
-          <div class="flex border-t border-b mb-6 border-gray-300 py-2">
-            <span class="text-gray-500">Email</span>
-            <span class="ml-auto text-gray-900">{{ users.email}}</span>
+        <h2 class="text-sm title-font text-gray-500 tracking-widest">PROFILE {{users.username|upper}}</h2>
+        <div class="flex mb-4">
+          <a href={% url 'profile:profile-detail' user.pk %}
+            class="flex-grow text-yellow-500 border-b-2 border-yellow-500 py-2 text-lg px-1">
+            Overview
+          </a>
+        </div>
+        <div class="flex border-t border-gray-300 py-2">
+          <span class="text-gray-500">Username</span>
+          <span class="ml-auto text-gray-900">{{ users.username }}</span>
+        </div>
+        <div class="flex border-t border-gray-300 py-2">
+          <span class="text-gray-500">First_name</span>
+          <span class="ml-auto text-gray-900">{{ users.first_name }}</span>
+        </div>
+        <div class="flex border-t border-b mb-6 border-gray-300 py-2">
+          <span class="text-gray-500">Last_name</span>
+          <span class="ml-auto text-gray-900">{{ users.last_name}}</span>
+        </div>
+        <div class="flex border-t border-b mb-6 border-gray-300 py-2">
+          <span class="text-gray-500">Email</span>
+          <span class="ml-auto text-gray-900">{{ users.email}}</span>
         </div>
         <div class="flex border-t border-b mb-6 border-gray-300 py-2">
           <span class="text-gray-500">Age</span>
           <span class="ml-auto text-gray-900">{{ users.age}}</span>
+        </div>
+        <div class="flex border-t border-b mb-6 border-gray-300 py-2">
+          <span class="text-gray-500">Address</span>
+          <span class="ml-auto text-gray-900">{{ users.address}}</span>
+        </div>
+        <div class="flex border-t border-b mb-6 border-gray-300 py-2">
+          <span class="text-gray-500">Phone_number</span>
+          <span class="ml-auto text-gray-900">{{ users.phone_number}}</span>
+        </div>
+        <div class="flex">
+          <a href="{% url 'profile:profile-delete' user.pk %}"
+            class="w-full mt-3 text-center text-white bg-yellow-500 border-0 py-2 px-6 focus:outline-none hover:bg-yellow-600 rounded">
+            Delete
+          </a>
+        </div>
       </div>
-      <div class="flex border-t border-b mb-6 border-gray-300 py-2">
-        <span class="text-gray-500">Address</span>
-        <span class="ml-auto text-gray-900">{{ users.address}}</span>
-    </div>
-    <div class="flex border-t border-b mb-6 border-gray-300 py-2">
-      <span class="text-gray-500">Phone_number</span>
-      <span class="ml-auto text-gray-900">{{ users.phone_number}}</span>
-  </div>
-          <div class="flex">
-            <a href="{% url 'profile:profile-delete' user.pk %}" class="w-full mt-3 text-center text-white bg-yellow-500 border-0 py-2 px-6 focus:outline-none hover:bg-yellow-600 rounded">
-                Delete
-            </a>
-          </div>
-      </div>
-      <img alt="profile logo" class="lg:w-1/2 w-full lg:h-auto h-50 object-cover object-center rounded" src={% static 'img/profile.svg' %}>
+      <img alt="profile logo" class="lg:w-1/2 w-full lg:h-auto h-50 object-cover object-center rounded"
+        src={% static 'img/profile.svg' %}>
     </div>
   </div>
 </section>

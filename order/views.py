@@ -88,12 +88,13 @@ class OrderDeleteView(LoginRequiredMixin, generic.DeleteView):
 
 class OrderJsonView(generic.View):
     def get(self, request, type, *args, **kwargs):
-        encode_orders = MongoJSONEncoder().encode(list(order_collection.find({'User':self.request.user.username, 'Type':type})))
+        encode_orders = MongoJSONEncoder().encode(
+            list(order_collection.find({'User': self.request.user.username, 'Type': type})))
         orders = json.loads(encode_orders)
         order = {
-            'order' : orders
+            'order': orders
         }
-        return JsonResponse(order, safe=False, json_dumps_params={'indent': 3} )
+        return JsonResponse(order, safe=False, json_dumps_params={'indent': 3})
 
 
 def update_user_profile(current_order, old_order, type):
@@ -103,37 +104,41 @@ def update_user_profile(current_order, old_order, type):
 
     if type == 'create':
         if current_order.order_type == 'Sell':
-            user.update(wallet_btc = user_btc_balance - current_order.btc_amount)
+            user.update(wallet_btc=user_btc_balance - current_order.btc_amount)
         else:
-            user.update(usd_balance = user_usd_balance - current_order.order_price)
+            user.update(usd_balance=user_usd_balance -
+                        current_order.order_price)
     elif type == 'update':
         btc_difference = current_order.btc_amount - old_order.btc_amount
         usd_difference = current_order.order_price - old_order.order_price
         if current_order.order_type == 'Buy':
             if current_order.order_price > old_order.order_price:
-                user.update(usd_balance = user_usd_balance - usd_difference)
+                user.update(usd_balance=user_usd_balance - usd_difference)
             else:
-                user.update(usd_balance = user_usd_balance - usd_difference)
+                user.update(usd_balance=user_usd_balance - usd_difference)
         else:
             if current_order.btc_amount > old_order.btc_amount:
-                user.update(wallet_btc = user_btc_balance - btc_difference)
+                user.update(wallet_btc=user_btc_balance - btc_difference)
             else:
-                user.update(wallet_btc = user_btc_balance - btc_difference)
+                user.update(wallet_btc=user_btc_balance - btc_difference)
     else:
         if current_order.order_type == 'Sell':
-            user.update(wallet_btc = user_btc_balance + current_order.btc_amount)
+            user.update(wallet_btc=user_btc_balance + current_order.btc_amount)
         elif current_order.order_type == 'Buy':
-            user.update(usd_balance = user_usd_balance + current_order.order_price)
+            user.update(usd_balance=user_usd_balance +
+                        current_order.order_price)
 
 
 def check_order_match():
-    buy_orders = Order.objects.filter(order_type='Buy',order_status='Open').order_by('-date_of_creation')
-    sell_orders = Order.objects.filter(order_type='Sell',order_status='Open').order_by('-date_of_creation')
+    buy_orders = Order.objects.filter(
+        order_type='Buy', order_status='Open').order_by('-date_of_creation')
+    sell_orders = Order.objects.filter(
+        order_type='Sell', order_status='Open').order_by('-date_of_creation')
     if buy_orders.count() >= 1 and sell_orders.count() >= 1:
         for buy_order in buy_orders:
             order_price = buy_order.order_price
             btc_amount = buy_order.btc_amount
-            for sell_order in sell_orders.filter(~Q(user=buy_order.user),order_price__lte=order_price, btc_amount=btc_amount,):
+            for sell_order in sell_orders.filter(~Q(user=buy_order.user), order_price__lte=order_price, btc_amount=btc_amount,):
                 if sell_order:
                     order_match(sell_order, buy_order)
 
@@ -149,14 +154,14 @@ def order_match(sell_order, buy_order):
     if buy_order.order_price > sell_order.order_price:
         price_difference = buy_order.order_price - sell_order.order_price
         buy_user.update(
-            wallet_btc = buy_user_btc + sell_order.btc_amount,
-            usd_balance = buy_user_usd + price_difference,
-            profit = buy_user_profit - sell_order.order_price
-            )
+            wallet_btc=buy_user_btc + sell_order.btc_amount,
+            usd_balance=buy_user_usd + price_difference,
+            profit=buy_user_profit - sell_order.order_price
+        )
         sell_user.update(
-            usd_balance = sell_user_usd + buy_order.order_price - price_difference,
-            profit = sell_user_profit + sell_order.order_price
-            )
+            usd_balance=sell_user_usd + buy_order.order_price - price_difference,
+            profit=sell_user_profit + sell_order.order_price
+        )
         sell_order.order_status = 'Close'
         sell_order.buyer_user = str(buy_user.get().username)
         sell_order.selling_price = sell_order.order_price
@@ -171,13 +176,13 @@ def order_match(sell_order, buy_order):
         save_order_transactions(sell_order, buy_order)
     else:
         buy_user.update(
-            wallet_btc = buy_user_btc + sell_order.btc_amount,
-            profit = buy_user_profit - sell_order.order_price
-            )
+            wallet_btc=buy_user_btc + sell_order.btc_amount,
+            profit=buy_user_profit - sell_order.order_price
+        )
         sell_user.update(
-            usd_balance = sell_user_usd + buy_order.order_price,
-            profit = sell_user_profit + sell_order.order_price
-            )
+            usd_balance=sell_user_usd + buy_order.order_price,
+            profit=sell_user_profit + sell_order.order_price
+        )
 
         sell_order.order_status = 'Close'
         sell_order.buyer_user = str(buy_user.get().username)
@@ -196,25 +201,25 @@ def save_order_transactions(sell_order, buy_order):
 
     order = [
         {
-            'User' : buy_order.user.username,
-            'Id' : buy_order.pk,
-            'Type' : buy_order.order_type,
-            'Status' : buy_order.order_status,
-            'Price' : buy_order.order_price,
-            'Qty' : buy_order.btc_amount,
-            'Refund' : buy_order.order_refund,
-            'Buyer' : sell_order.user.username,
-            'Purchase Price' : buy_order.selling_price,
+            'User': buy_order.user.username,
+            'Id': buy_order.pk,
+            'Type': buy_order.order_type,
+            'Status': buy_order.order_status,
+            'Price': buy_order.order_price,
+            'Qty': buy_order.btc_amount,
+            'Refund': buy_order.order_refund,
+            'Buyer': sell_order.user.username,
+            'Purchase Price': buy_order.selling_price,
         },
         {
-            'User' : sell_order.user.username,
-            'Id' : sell_order.pk,
-            'Type' : sell_order.order_type,
-            'Status' : sell_order.order_status,
-            'Price' : sell_order.order_price,
-            'Qty' : sell_order.btc_amount,
-            'Buyer' : buy_order.user.username,
-            'Purchase Price' : sell_order.selling_price,
+            'User': sell_order.user.username,
+            'Id': sell_order.pk,
+            'Type': sell_order.order_type,
+            'Status': sell_order.order_status,
+            'Price': sell_order.order_price,
+            'Qty': sell_order.btc_amount,
+            'Buyer': buy_order.user.username,
+            'Purchase Price': sell_order.selling_price,
         }
     ]
     order_collection.insert_many(order)

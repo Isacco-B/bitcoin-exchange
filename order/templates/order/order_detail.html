@@ -6,81 +6,84 @@
   <div class="container px-5 py-24 mx-auto">
     <div class="mx-auto flex flex-wrap">
       <div class="w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
-          <h2 class="text-sm title-font text-gray-500 tracking-widest">ORDER {{orders.user|upper}}</h2>
-          <div class="flex mb-4">
-              <a href={% url 'orders:order-detail' orders.pk %} class="flex-grow text-yellow-500 border-b-2 border-yellow-500 py-2 text-lg px-1">
-                  Overview
-              </a>
-              {% if orders.order_status == 'Open' and orders.user.pk == request.user.pk%}
-              <a href={% url 'orders:order-update' orders.pk %} class="flex-grow border-b-2 border-gray-300 py-2 text-lg px-1">
-                  Update Details
-              </a>
-              {% endif %}
-          </div>
-          {% if orders.order_status == 'Open'%}
-          <div class="flex border-t border-gray-300 py-2">
-            <span class="text-gray-500">Type</span>
-            <span class="ml-auto text-gray-900">{{ orders.order_type }}</span>
-          </div>
-          <div class="flex border-t border-gray-300 py-2">
-            <span class="text-gray-500">Status</span>
-            <span class="ml-auto text-green-500">{{ orders.order_status }}</span>
-          </div>
-          <div class="flex border-t border-gray-300 py-2">
-            <span class="text-gray-500">Btc Amount</span>
-            <span class="ml-auto text-gray-900">{{ orders.btc_amount|floatformat:2 }}</span>
-          </div>
-          <div class="flex border-t border-gray-300 py-2">
-              <span class="text-gray-500">Order Price</span>
-              <span class="ml-auto text-gray-900">{{ orders.order_price|floatformat:2 }}</span>
-          </div>
-          <div class="flex border-t border-gray-300 py-2">
-              <span class="text-gray-500">Date Of Creation</span>
-              <span class="ml-auto text-gray-900">{{ orders.date_of_creation|date:"d-m-Y H:i" }}</span>
-          </div>
-          {% else %}
-          <div class="flex border-t border-gray-300 py-2">
-            <span class="text-gray-500">Type</span>
-            <span class="ml-auto text-gray-900">{{ orders.order_type }}</span>
-          </div>
-          <div class="flex border-t border-gray-300 py-2">
-            <span class="text-gray-500">Status</span>
-            <span class="ml-auto text-red-500">{{ orders.order_status }}</span>
-          </div>
-          <div class="flex border-t border-gray-300 py-2">
-            <span class="text-gray-500">Btc Amount</span>
-            <span class="ml-auto text-gray-900">{{ orders.btc_amount|floatformat:2 }}</span>
-          </div>
-          <div class="flex border-t border-gray-300 py-2">
-              <span class="text-gray-500">Order Price</span>
-              <span class="ml-auto text-gray-900">{{ orders.order_price|floatformat:2 }}</span>
-          </div>
-          <div class="flex border-t border-gray-300 py-2">
-            <span class="text-gray-500">Purchase Price</span>
-            <span class="ml-auto text-gray-900">{{ orders.selling_price|floatformat:2}}</span>
-          </div>
-          {% if orders.order_refund > 1 %}
-          <div class="flex border-t border-gray-300 py-2">
-            <span class="text-gray-500">Refund</span>
-            <span class="ml-auto text-green-500">+ {{ orders.order_refund|floatformat:2 }}</span>
-          </div>
+        <h2 class="text-sm title-font text-gray-500 tracking-widest">ORDER {{orders.user|upper}}</h2>
+        <div class="flex mb-4">
+          <a href={% url 'orders:order-detail' orders.pk %}
+            class="flex-grow text-yellow-500 border-b-2 border-yellow-500 py-2 text-lg px-1">
+            Overview
+          </a>
+          {% if orders.order_status == 'Open' and orders.user.pk == request.user.pk%}
+          <a href={% url 'orders:order-update' orders.pk %}
+            class="flex-grow border-b-2 border-gray-300 py-2 text-lg px-1">
+            Update Details
+          </a>
           {% endif %}
-          <div class="flex border-t border-gray-300 py-2">
-            <span class="text-gray-500">Buyer</span>
-            <span class="ml-auto text-gray-900">{{ orders.buyer_user }}</span>
-          </div>
-          <div class="flex border-t border-gray-300 py-2">
-              <span class="text-gray-500">Date Of Creation</span>
-              <span class="ml-auto text-gray-900">{{ orders.date_of_creation|date:"d-m-Y H:i" }}</span>
-          </div>
-          {% endif %}
-          {% if orders.order_status == 'Open' and orders.user.pk == request.user.pk %}
-          <div class="flex">
-            <a href="{% url 'orders:order-delete' orders.pk %}" class="w-full mt-3 text-center text-white bg-yellow-500 border-0 py-2 px-6 focus:outline-none hover:bg-yellow-600 rounded">
-                Delete
-            </a>
-          </div>
-          {% endif %}
+        </div>
+        {% if orders.order_status == 'Open'%}
+        <div class="flex border-t border-gray-300 py-2">
+          <span class="text-gray-500">Type</span>
+          <span class="ml-auto text-gray-900">{{ orders.order_type }}</span>
+        </div>
+        <div class="flex border-t border-gray-300 py-2">
+          <span class="text-gray-500">Status</span>
+          <span class="ml-auto text-green-500">{{ orders.order_status }}</span>
+        </div>
+        <div class="flex border-t border-gray-300 py-2">
+          <span class="text-gray-500">Btc Amount</span>
+          <span class="ml-auto text-gray-900">{{ orders.btc_amount|floatformat:2 }}</span>
+        </div>
+        <div class="flex border-t border-gray-300 py-2">
+          <span class="text-gray-500">Order Price</span>
+          <span class="ml-auto text-gray-900">{{ orders.order_price|floatformat:2 }}</span>
+        </div>
+        <div class="flex border-t border-gray-300 py-2">
+          <span class="text-gray-500">Date Of Creation</span>
+          <span class="ml-auto text-gray-900">{{ orders.date_of_creation|date:"d-m-Y H:i" }}</span>
+        </div>
+        {% else %}
+        <div class="flex border-t border-gray-300 py-2">
+          <span class="text-gray-500">Type</span>
+          <span class="ml-auto text-gray-900">{{ orders.order_type }}</span>
+        </div>
+        <div class="flex border-t border-gray-300 py-2">
+          <span class="text-gray-500">Status</span>
+          <span class="ml-auto text-red-500">{{ orders.order_status }}</span>
+        </div>
+        <div class="flex border-t border-gray-300 py-2">
+          <span class="text-gray-500">Btc Amount</span>
+          <span class="ml-auto text-gray-900">{{ orders.btc_amount|floatformat:2 }}</span>
+        </div>
+        <div class="flex border-t border-gray-300 py-2">
+          <span class="text-gray-500">Order Price</span>
+          <span class="ml-auto text-gray-900">{{ orders.order_price|floatformat:2 }}</span>
+        </div>
+        <div class="flex border-t border-gray-300 py-2">
+          <span class="text-gray-500">Purchase Price</span>
+          <span class="ml-auto text-gray-900">{{ orders.selling_price|floatformat:2}}</span>
+        </div>
+        {% if orders.order_refund > 1 %}
+        <div class="flex border-t border-gray-300 py-2">
+          <span class="text-gray-500">Refund</span>
+          <span class="ml-auto text-green-500">+ {{ orders.order_refund|floatformat:2 }}</span>
+        </div>
+        {% endif %}
+        <div class="flex border-t border-gray-300 py-2">
+          <span class="text-gray-500">Buyer</span>
+          <span class="ml-auto text-gray-900">{{ orders.buyer_user }}</span>
+        </div>
+        <div class="flex border-t border-gray-300 py-2">
+          <span class="text-gray-500">Date Of Creation</span>
+          <span class="ml-auto text-gray-900">{{ orders.date_of_creation|date:"d-m-Y H:i" }}</span>
+        </div>
+        {% endif %}
+        {% if orders.order_status == 'Open' and orders.user.pk == request.user.pk %}
+        <div class="flex">
+          <a href="{% url 'orders:order-delete' orders.pk %}"
+            class="w-full mt-3 text-center text-white bg-yellow-500 border-0 py-2 px-6 focus:outline-none hover:bg-yellow-600 rounded">
+            Delete
+          </a>
+        </div>
+        {% endif %}
       </div>
     </div>
   </div>

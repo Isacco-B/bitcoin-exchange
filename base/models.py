@@ -3,7 +3,6 @@ from django.contrib.auth.models import AbstractUser
 from base.utility import random_btc_amount
 
 
-
 class User(AbstractUser):
 
     GENDER_CHOICES = (
@@ -46,10 +45,11 @@ class Order(models.Model):
         ('Sell', 'Sell'),
     )
 
-
-    order_type = models.CharField(choices=ORDER_TYPE, default='Buy', max_length=50)
-    order_status = models.CharField(choices=ORDER_STATUS, default='Open', max_length=50)
-    btc_amount = models.FloatField(default= 0)
+    order_type = models.CharField(
+        choices=ORDER_TYPE, default='Buy', max_length=50)
+    order_status = models.CharField(
+        choices=ORDER_STATUS, default='Open', max_length=50)
+    btc_amount = models.FloatField(default=0)
     order_price = models.FloatField(default=0)
     selling_price = models.FloatField(default=0)
     order_refund = models.FloatField(default=0)
@@ -63,16 +63,3 @@ class Order(models.Model):
 
     def __str__(self):
         return self.user.username
-
-
-
-
-
-
-
-
-
-
-
-
-
