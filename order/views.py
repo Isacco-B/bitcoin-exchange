@@ -106,7 +106,8 @@ def update_user_profile(current_order, old_order, type):
         if current_order.order_type == 'Sell':
             user.update(wallet_btc=user_btc_balance - current_order.btc_amount)
         else:
-            user.update(usd_balance=user_usd_balance - current_order.order_price)
+            user.update(usd_balance=user_usd_balance -
+                        current_order.order_price)
     elif type == 'update':
         btc_difference = current_order.btc_amount - old_order.btc_amount
         usd_difference = current_order.order_price - old_order.order_price
@@ -124,14 +125,15 @@ def update_user_profile(current_order, old_order, type):
         if current_order.order_type == 'Sell':
             user.update(wallet_btc=user_btc_balance + current_order.btc_amount)
         elif current_order.order_type == 'Buy':
-            user.update(usd_balance=user_usd_balance + current_order.order_price)
+            user.update(usd_balance=user_usd_balance +
+                        current_order.order_price)
 
 
 def check_order_match():
     buy_orders = Order.objects.filter(
-        order_type='Buy', order_status='Open').order_by('order_price','date_of_creation')
+        order_type='Buy', order_status='Open').order_by('order_price', 'date_of_creation')
     sell_orders = Order.objects.filter(
-        order_type='Sell', order_status='Open').order_by('order_price','date_of_creation')
+        order_type='Sell', order_status='Open').order_by('order_price', 'date_of_creation')
 
     if buy_orders.exists() and sell_orders.exists():
         for buy_order in buy_orders:
@@ -141,7 +143,7 @@ def check_order_match():
                 ~Q(user=buy_order.user),
                 order_price=buy_order.order_price,
                 btc_amount=buy_order.btc_amount
-                )
+            )
             if matching_sell_orders.exists():
                 match_type = 'A'
             else:
@@ -149,7 +151,7 @@ def check_order_match():
                     ~Q(user=buy_order.user),
                     order_price__lte=buy_order.order_price,
                     btc_amount=buy_order.btc_amount
-                    )
+                )
                 if matching_sell_orders.exists():
                     match_type = 'B'
                 else:
@@ -157,7 +159,7 @@ def check_order_match():
                         ~Q(user=buy_order.user),
                         order_price__lte=buy_order.order_price,
                         btc_amount__gte=buy_order.btc_amount
-                        )
+                    )
                     if matching_sell_orders.exists():
                         match_type = 'C'
             if match_type:
@@ -222,12 +224,14 @@ def order_match(sell_order, buy_order, match_type):
 
     if match_type == 'C':
         new_sell_order = Order.objects.filter(pk=sell_order.pk)
-        price_difference = buy_order.order_price - (buy_order.order_price - int(buy_order.btc_amount * (sell_order.order_price / sell_order.btc_amount)))
+        price_difference = buy_order.order_price - (buy_order.order_price - int(
+            buy_order.btc_amount * (sell_order.order_price / sell_order.btc_amount)))
         btc_difference = sell_order.btc_amount - buy_order.btc_amount
 
         buy_user.update(
             wallet_btc=buy_user_btc + sell_order.btc_amount - btc_difference,
-            usd_balance=buy_user_usd + (buy_order.order_price - price_difference),
+            usd_balance=buy_user_usd +
+            (buy_order.order_price - price_difference),
             profit=buy_user_profit - price_difference,
         )
         sell_user.update(
@@ -235,10 +239,10 @@ def order_match(sell_order, buy_order, match_type):
             profit=sell_user_profit + price_difference,
         )
         new_sell_order.update(
-            order_status = 'Open',
-            buyer_user = buy_user.get().username,
-            order_price = sell_order.order_price - price_difference,
-            btc_amount = sell_order.btc_amount - btc_difference,
+            order_status='Open',
+            buyer_user=buy_user.get().username,
+            order_price=sell_order.order_price - price_difference,
+            btc_amount=sell_order.btc_amount - btc_difference,
         )
 
         buy_order.order_status = 'Close'
