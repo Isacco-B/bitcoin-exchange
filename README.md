@@ -1,6 +1,6 @@
 # MigrantSchool Web application
-Create a bitcoin exchange platform using DJongo with the following specifications.
-<a href="https://demo2.isaccobertoli.com/">Try Demo</a>
+
+- An online Bitcoin exchange platform created with Django. It implements authentication, automatically assigns Bitcoin values, and allows users to create buy and sell orders. Completed orders are recorded on the blockchain.
 
 
 ## Requirements:
